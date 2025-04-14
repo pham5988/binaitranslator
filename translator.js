@@ -10,14 +10,24 @@
 // @grant       GM_log
 // @grant       GM_addStyle
 // @grant       GM_xmlhttpRequest
+// @grant       GM_setValue
+// @grant       GM_getValue
 // ==/UserScript==
 
 (function () {
     "use strict";
   
-    const apiKey = "AIzaSyCNwoGaDTz4xLLUS2e6_pO4mjTNCF2dJoA"; // 🔑 Nhập API key Gemini tại đây
+    let apiKey = ""; // 🔑 Nhập API key Gemini tại đây
+    let url = ""; // Đường dẫn API Gemini
     const model = "gemini-2.0-flash-lite";
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+
+    // Lấy API Key từ localStorage nếu có
+    function initApiKey() {
+        apiKey = getApiKey();
+        console.log("✅ API Key đã được init:", apiKey);
+        url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    }
+    initApiKey();
   
     // ==== CSS popup ====
     GM_addStyle(`
@@ -152,7 +162,160 @@
     .tm-popup-content::-webkit-scrollbar-thumb:hover {
         background: #a8a8a8;
     }
-  `);
+    
+    /* Popup settings form */
+    .tm-settings-form {
+        position: relative;
+        width: 400px;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        z-index: 9999;
+        overflow: hidden;
+    }
+
+    /* Form header */
+    .tm-settings-header {
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+        color: white;
+        padding: 12px 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        user-select: none;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+    }
+
+    .tm-settings-title {
+        font-weight: 500;
+        font-size: 16px;
+    }
+
+    /* Close button */
+    .tm-settings-close {
+        cursor: pointer;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.2);
+        transition: all 0.2s ease;
+    }
+
+    .tm-settings-close:hover {
+        background-color: rgba(255, 255, 255, 0.4);
+        transform: scale(1.1);
+    }
+
+    .tm-settings-close:before, .tm-settings-close:after {
+        content: '';
+        position: absolute;
+        width: 12px;
+        height: 2px;
+        background-color: white;
+    }
+
+    .tm-settings-close:before {
+        transform: rotate(45deg);
+    }
+
+    .tm-settings-close:after {
+        transform: rotate(-45deg);
+    }
+
+    /* Form content */
+    .tm-settings-content {
+        padding: 20px;
+    }
+
+    /* Form group */
+    .tm-form-group {
+        margin-bottom: 20px;
+    }
+
+    .tm-form-label {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 14px;
+        font-weight: 500;
+        color: #333;
+    }
+
+    .tm-form-input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: border-color 0.2s ease;
+        box-sizing: border-box;
+    }
+
+    .tm-form-input:focus {
+        border-color: #6e8efb;
+        outline: none;
+        box-shadow: 0 0 0 2px rgba(110, 142, 251, 0.2);
+    }
+
+    /* Form footer with buttons */
+    .tm-settings-footer {
+        display: flex;
+        justify-content: flex-end;
+        padding: 15px 20px;
+        background-color: #f9f9f9;
+        border-top: 1px solid #eee;
+        gap: 10px;
+    }
+
+    /* Button styles */
+    .tm-button {
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-weight: 500;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none;
+    }
+
+    .tm-button-primary {
+        background: linear-gradient(135deg, #6e8efb, #a777e3);
+        color: white;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .tm-button-primary:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transform: translateY(-1px);
+    }
+
+    .tm-button-primary:active {
+        transform: translateY(1px);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .tm-button-secondary {
+        background-color: #f1f1f1;
+        color: #333;
+    }
+
+    .tm-button-secondary:hover {
+        background-color: #e5e5e5;
+    }
+
+    /* Keyboard shortcut info */
+    .tm-shortcut-info {
+        display: block;
+        margin-top: 5px;
+        font-size: 12px;
+        color: #777;
+        font-style: italic;
+    }
+    `);
   
     // ==== Ẩn popup khi click ngoài ====
     document.addEventListener("mousedown", (e) => {
@@ -356,5 +519,152 @@
       const existing = document.querySelector(selector);
       if (existing) existing.remove();
     }
+
+    // ==== Lưu và lấy API Key ====
+    function showSettingsPopup() {
+    removePopup(".tm-settings-form");
+
+    // Tạo overlay
+    const overlay = document.createElement('div');
+    overlay.className = 'tm-settings-overlay';
+
+    // Tạo form container
+    const form = document.createElement('div');
+    form.className = 'tm-settings-form';
+
+    // Đặt vị trí cho form
+    form.style.position = 'fixed';
+    form.style.top = '50%';
+    form.style.left = '50%';
+    form.style.transform = 'translate(-50%, -50%)';
+
+    // Tạo header
+    const header = document.createElement('div');
+    header.className = 'tm-settings-header';
+
+    // Tiêu đề
+    const title = document.createElement('div');
+    title.className = 'tm-settings-title';
+    title.textContent = 'Cài đặt API Key';
+
+    // Nút đóng
+    const closeBtn = document.createElement('div');
+    closeBtn.className = 'tm-settings-close';
+    closeBtn.onclick = function() {
+        document.body.removeChild(overlay);
+    };
+
+    // Phần nội dung form
+    const content = document.createElement('div');
+    content.className = 'tm-settings-content';
+
+    // Form group cho API Key
+    const formGroup = document.createElement('div');
+    formGroup.className = 'tm-form-group';
+
+    // Label
+    const label = document.createElement('label');
+    label.className = 'tm-form-label';
+    label.textContent = 'API Key';
+    label.htmlFor = 'api-key-input';
+
+    // Input
+    const input = document.createElement('input');
+    input.className = 'tm-form-input';
+    input.id = 'api-key-input';
+    input.type = 'text';
+    input.placeholder = 'Nhập API Key của bạn tại đây';
+    input.value = getApiKey();
+
+    // Shortcut info
+    const shortcutInfo = document.createElement('span');
+    shortcutInfo.className = 'tm-shortcut-info';
+    shortcutInfo.textContent = 'Phím tắt: Alt+S để mở form này';
+
+    // Form footer
+    const footer = document.createElement('div');
+    footer.className = 'tm-settings-footer';
+
+    // Nút Save
+    const saveBtn = document.createElement('button');
+    saveBtn.className = 'tm-button tm-button-primary';
+    saveBtn.textContent = 'Lưu';
+    saveBtn.onclick = function() {
+        saveApiKey(input.value);
+        document.body.removeChild(overlay);
+        // Thông báo lưu thành công
+        //showNotification('API Key đã được lưu thành công!');
+    };
+
+    // Nút Cancel
+    const cancelBtn = document.createElement('button');
+    cancelBtn.className = 'tm-button tm-button-secondary';
+    cancelBtn.textContent = 'Hủy';
+    cancelBtn.onclick = function() {
+        document.body.removeChild(overlay);
+    };
+
+    // Lắp ráp form
+    formGroup.appendChild(label);
+    formGroup.appendChild(input);
+    formGroup.appendChild(shortcutInfo);
+
+    content.appendChild(formGroup);
+
+    header.appendChild(title);
+    header.appendChild(closeBtn);
+
+    footer.appendChild(cancelBtn);
+    footer.appendChild(saveBtn);
+
+    form.appendChild(header);
+    form.appendChild(content);
+    form.appendChild(footer);
+
+    overlay.appendChild(form);
+    document.body.appendChild(overlay);
+
+    // Focus vào input
+    setTimeout(() => {
+        input.focus();
+    }, 100);
+
+    // Xử lý phím Enter để lưu
+    input.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            saveApiKey(input.value);
+            document.body.removeChild(overlay);
+            //showNotification('API Key đã được lưu thành công!');
+        }
+    });
+
+    // Xử lý click bên ngoài để đóng form
+    overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+            document.body.removeChild(overlay);
+        }
+    });
+    }  
+
+    // Lưu API Key vào localStorage
+    function saveApiKey(inputApiKey) {
+        GM_setValue('apiKey', inputApiKey);
+        console.log("✅ API Key đã được lưu:", inputApiKey);
+        initApiKey(); // Cập nhật lại API Key
+        console.log("✅ API Key đang sử dụng:", apiKey);
+    }
+
+    // Lấy API Key từ localStorage
+    function getApiKey() {
+        return GM_getValue('apiKey', '');
+    }
+
+    // Show settings popup khi nhấn Alt + S
+    document.addEventListener('keydown', function(e) {
+        if (e.altKey && e.key === 's') {
+        e.preventDefault(); // Ngăn hành vi mặc định của trình duyệt
+        showSettingsPopup();
+        }
+    });
   })();
   
