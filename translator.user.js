@@ -1,10 +1,10 @@
 // ==UserScript==
-// @name        bin AI translator
+// @name        Bin AI translator
 // @namespace   binnguyen
-// @version     1.0
+// @version     2.1
 // @connect     generativelanguage.googleapis.com
-// @match        *://*/*
-// @run-at       document-end
+// @match       *://*/*
+// @run-at      document-end
 // @author      Bin
 // @description Dich van ban bang AI gemini
 // @grant       GM_log
@@ -67,6 +67,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        width: 50%;
         max-width: 900px;
         background-color: #ffffff;
         border-radius: 8px;
@@ -80,20 +81,6 @@
 
     @keyframes fadeIn {
         to { opacity: 1; }
-    }
-
-    /* Phần header của popup */
-    .tm-popup-header {
-        background: linear-gradient(135deg, #6e8efb, #a777e3);
-        color: white;
-        padding: 12px 15px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: move;
-        user-select: none;
-        border-top-left-radius: 8px;
-        border-top-right-radius: 8px;
     }
 
     .tm-popup-title {
@@ -166,7 +153,7 @@
     /* A-V translate form */
     .tm-translate-form {
         position: relative;
-        width: 600px;
+        width: 50%;
         background-color: #ffffff;
         border-radius: 8px;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
@@ -178,7 +165,7 @@
     /* Popup settings form */
     .tm-settings-form {
         position: relative;
-        width: 400px;
+        width: 40%;
         background-color: #ffffff;
         border-radius: 8px;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
@@ -188,7 +175,7 @@
     }
 
     /* Form header */
-    .tm-settings-header {
+    .tm-header {
         background: linear-gradient(135deg, #6e8efb, #a777e3);
         color: white;
         padding: 12px 15px;
@@ -250,84 +237,124 @@
     }
 
     .tm-form-label {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 14px;
-        font-weight: 500;
-        color: #333;
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
     }
 
     .tm-form-input {
-        width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        font-size: 14px;
-        transition: border-color 0.2s ease;
-        box-sizing: border-box;
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      transition: border-color 0.2s ease;
+      box-sizing: border-box;
     }
 
     .tm-form-input:focus {
-        border-color: #6e8efb;
-        outline: none;
-        box-shadow: 0 0 0 2px rgba(110, 142, 251, 0.2);
+      border-color: #6e8efb;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(110, 142, 251, 0.2);
     }
 
     /* Form footer with buttons */
     .tm-settings-footer {
-        display: flex;
-        justify-content: flex-end;
-        padding: 15px 20px;
-        background-color: #f9f9f9;
-        border-top: 1px solid #eee;
-        gap: 10px;
+      display: flex;
+      justify-content: flex-end;
+      padding: 15px 20px;
+      background-color: #f9f9f9;
+      border-top: 1px solid #eee;
+      gap: 10px;
     }
 
     /* Button styles */
     .tm-button {
-        padding: 8px 16px;
-        border-radius: 4px;
-        font-weight: 500;
-        font-size: 14px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
     }
 
     .tm-button-primary {
-        background: linear-gradient(135deg, #6e8efb, #a777e3);
-        color: white;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      background: linear-gradient(135deg, #6e8efb, #a777e3);
+      color: white;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
 
     .tm-button-primary:hover {
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      transform: translateY(-1px);
     }
 
     .tm-button-primary:active {
-        transform: translateY(1px);
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+      transform: translateY(1px);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     }
 
     .tm-button-secondary {
-        background-color: #f1f1f1;
-        color: #333;
+      background-color: #f1f1f1;
+      color: #333;
     }
 
     .tm-button-secondary:hover {
-        background-color: #e5e5e5;
+      background-color: #e5e5e5;
     }
 
     /* Keyboard shortcut info */
     .tm-shortcut-info {
-        display: block;
-        margin-top: 5px;
-        font-size: 12px;
-        color: #777;
-        font-style: italic;
+      display: block;
+      margin-top: 5px;
+      font-size: 12px;
+      color: #777;
+      font-style: italic;
     }
-    `);
+    
+    .tm-result-box {
+      background: #f9f9f9;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 10px;
+      min-height: 80px;
+      font-size: 14px;
+      white-space: pre-wrap;
+      color: #333;
+    }
+    
+    .tm-copy-button {
+      background: none;
+      border: none;
+      color: #666;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      transition: color 0.2s ease;
+      position: relative;
+      margin-top: 5px;
+    }
+
+    .tm-copy-button:hover {
+      color: #007BFF;
+    }
+
+    .tm-copy-button.copied::after {
+      content: "✓ Copied";
+      position: absolute;
+      right: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 12px;
+      color: green;
+      opacity: 1;
+      transition: opacity 0.3s ease;
+    }
+`);
 
     // ==== Ẩn popup khi click ngoài ====
     document.addEventListener("mousedown", (e) => {
@@ -349,8 +376,8 @@
     // ==== Bắt sự kiện bôi đen ====
     document.addEventListener("mouseup", () => {
       setTimeout(() => {
-        const selection = window.getSelection();
-        if (!selection || selection.rangeCount === 0) return;
+        const selection = window.getSelection();  // Lấy đoạn văn bản được chọn
+        if (!selection || selection.rangeCount === 0) return; // Nếu không có đoạn văn bản nào được chọn
 
         const selectedText = selection.toString().trim();
         if (!selectedText) return;
@@ -395,51 +422,42 @@
       // Xoá popup cũ nếu có
       removePopup(".tm-popup");
 
-      // Tạo popup
-      const popup = document.createElement("div");
-      popup.className = "tm-popup";
+      createForm({
+        overlayClass: 'tm-popup-overlay',
+        formClass: 'tm-popup',
+        contentClass: 'tm-popup-content',
+        header: {
+          title: 'Bin AI Translator',
+          //className: 'tm-popup-header',
+        },
+        formGroups: [
+          {
+            label: {
+              className: 'tm-form-label',
+              //text: '',
+              inputId: 'translate-result'
+            },
+            resultBox: {
+              //className: 'tm-result-box',
+              id: 'translate-result'
+            }
+          }
+        ],
+      });
 
-      // Tạo header
-      const header = document.createElement('div');
-      header.className = 'tm-popup-header';
-
-      // Tiêu đề - Sửa lỗi: định nghĩa title
-      const title = "Bin AI Translator";
-      const titleElement = document.createElement('div');
-      titleElement.className = 'tm-popup-title';
-      titleElement.textContent = title;
-
-      // Nút đóng
-      const closeBtn = document.createElement("div");
-      closeBtn.className = "tm-popup-close";
-      closeBtn.onclick = () => popup.remove();
-
-      // Phần nội dung
-      const resultDiv = document.createElement("div");
-      resultDiv.className = "tm-popup-content";
-      resultDiv.innerText = "Đang dịch...";
-
-      // Lắp ráp các phần
-      header.appendChild(titleElement);
-      header.appendChild(closeBtn);
-      popup.appendChild(header);
-      popup.appendChild(resultDiv);
-
+      // Chức năng kéo thả
+      const popup = document.querySelector('.tm-popup');
+      const header = popup.querySelector('.tm-header');
       // Vị trí popup dựa trên rect
       popup.style.position = "absolute"; // Đảm bảo vị trí tuyệt đối
       popup.style.top = `${rect.bottom + window.scrollY + 10}px`;
       popup.style.left = `${rect.left + window.scrollX}px`;
       popup.style.transform = "none"; // Xóa transform mặc định (nếu có)
-
-      // Thêm vào DOM
-      //overlay.appendChild(popup);
-      document.body.appendChild(popup);
-
-      // Chức năng kéo thả
       makeDraggable(popup, header);
 
       // Gọi API Gemini để dịch văn bản
-      let promt = `Bạn là phiên dịch viên, nhiệm vụ của bạn là dịch đoạn sau sang tiếng Việt, ngắn gọn chính xác nhất:`
+      const resultDiv = document.querySelector("#translate-result");
+      let promt = `Bạn là phiên dịch viên, nhiệm vụ của bạn là dịch đoạn sau sang tiếng Việt và chỉ hiện thị kết quả dịch:`
       callGeminiAPI(text, resultDiv, promt);
   }
 
@@ -512,6 +530,7 @@
         pos3 = e.clientX;
         pos4 = e.clientY;
 
+        const rect = element.getBoundingClientRect();
         // Reset transform để di chuyển bằng top và left
         element.style.transform = 'none';
 
@@ -544,7 +563,7 @@
       // Tạo header
       if (config.header){
       const header = document.createElement('div');
-      header.className = 'tm-settings-header';
+      header.className = 'tm-header';
       header.textContent = config.header.title || 'Form Title';
       form.appendChild(header);
       
@@ -582,6 +601,8 @@
           input.id = group.input.inputId || 'input-id';
           input.type = group.input.type || 'text';
           input.placeholder = group.input.placeholder || 'Nhập văn bản tại đây';
+          input.value = group.input.value || ''; // Giá trị mặc định
+          input.focus() // Tự động focus vào input khi mở form
           formGroup.appendChild(input);
       }
 
@@ -592,7 +613,31 @@
           textarea.id = group.textarea.inputId || 'textarea-id';
           textarea.placeholder = group.textarea.placeholder || 'Nhập văn bản tại đây';
           textarea.style.height = group.textarea.height || '150px'; // Chiều cao mặc định
+          textarea.style.resize = 'vertical'; // Cho phép thay đổi chiều cao
           formGroup.appendChild(textarea);
+      }
+      // Tạo result box
+      if (group.resultBox) {
+        const resultDiv = document.createElement('div');
+        resultDiv.id = group.resultBox.id || 'translate-result';
+        resultDiv.className = group.resultBox.className || 'tm-result-box';
+        resultDiv.textContent = ''; // Ban đầu rỗng
+        formGroup.appendChild(resultDiv);
+
+         // ✅ Thêm nút Copy
+        const copyBtn = document.createElement("button");
+        copyBtn.className = "tm-copy-button";
+        // add svg icon vào button copy
+        copyBtn.innerHTML = `
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+            xmlns="http://www.w3.org/2000/svg" class="icon-md-heavy">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+              d="M7 5C7 3.34315 8.34315 2 10 2H19C20.6569 2 22 3.34315 22 5V14C22 15.6569 20.6569 17 19 17H17V19C17 20.6569 15.6569 22 14 22H5C3.34315 22 2 20.6569 2 19V10C2 8.34315 3.34315 7 5 7H7V5ZM9 7H14C15.6569 7 17 8.34315 17 10V15H19C19.5523 15 20 14.5523 20 14V5C20 4.44772 19.5523 4 19 4H10C9.44772 4 9 4.44772 9 5V7ZM5 9C4.44772 9 4 9.44772 4 10V19C4 19.5523 4.44772 20 5 20H14C14.5523 20 15 19.5523 15 19V10C15 9.44772 14.5523 9 14 9H5Z"
+              fill="currentColor"></path>
+          </svg>
+        `;
+        copyBtn.setAttribute("data-target", resultDiv.id);
+        formGroup.appendChild(copyBtn); // Gắn bên dưới kết quả (hoặc dùng insertAdjacentElement nếu muốn gắn cạnh)
       }
       content.appendChild(formGroup);
     });
@@ -601,7 +646,7 @@
       form.style.position = 'fixed';
       form.style.top = '50%';
       form.style.left = '50%';
-      form.style.transform = 'none';
+      form.style.transform = 'translate(-50%, -50%)';
 
       // Tạo footer
       if (config.footer){
@@ -634,134 +679,83 @@
       overlay.appendChild(form);
       document.body.appendChild(overlay);
 
-      makeDraggable(form, header);
+      //makeDraggable(form, header);
     }
 
     // ==== Setting popup ====
     function showSettingsPopup() {
       removePopup(".tm-settings-form");
 
-      // Tạo overlay
-      const overlay = document.createElement('div');
-      overlay.className = 'tm-settings-overlay';
+      createForm({
+        overlayClass: 'tm-settings-overlay',
+        formClass: 'tm-settings-form',
+        contentClass: 'tm-settings-content',
+        header: {
+          title: 'Cài đặt API Key',
+        },
+        formGroups: [
+          {
+            label: {
+              className: 'tm-form-label',
+              text: 'API Key',
+              inputId: 'api-key-input'
+            },
+            input: {
+              className: 'tm-form-input',
+              inputId: 'api-key-input',
+              type: 'text',
+              placeholder: 'Nhập API Key của bạn tại đây',
+              value: getApiKey(),
+              forcus: true // Tự động focus vào input khi mở form
+            }
+          }
+        ],
+        footer: {
+          buttons: [
+            {
+              text: 'Cancel',
+              className: 'tm-button tm-button-secondary'
+            },
+            {
+              text: 'Save',
+              className: 'tm-button tm-button-primary',
+              onclick: function() {
+                const input = document.getElementById('api-key-input');
+                saveApiKey(input.value);
+                document.body.removeChild(overlay);
+                //showNotification('API Key đã được lưu thành công!');
+              }
+            }
+          ]
+        }
+      });
 
-      // Tạo form container
-      const form = document.createElement('div');
-      form.className = 'tm-settings-form';
-
-      // Đặt vị trí cho form
-      form.style.position = 'fixed';
-      form.style.top = '50%';
-      form.style.left = '50%';
-      form.style.transform = 'translate(-50%, -50%)';
-
-      // Tạo header
-      const header = document.createElement('div');
-      header.className = 'tm-settings-header';
-
-      // Tiêu đề
-      const title = document.createElement('div');
-      title.className = 'tm-settings-title';
-      title.textContent = 'Cài đặt API Key';
-
-      // Nút đóng
-      const closeBtn = document.createElement('div');
-      closeBtn.className = 'tm-settings-close';
-      closeBtn.onclick = function() {
-          document.body.removeChild(overlay);
-      };
-
-      // Phần nội dung form
-      const content = document.createElement('div');
-      content.className = 'tm-settings-content';
-
-      // Form group cho API Key
-      const formGroup = document.createElement('div');
-      formGroup.className = 'tm-form-group';
-
-      // Label
-      const label = document.createElement('label');
-      label.className = 'tm-form-label';
-      label.textContent = 'API Key';
-      label.htmlFor = 'api-key-input';
-
-      // Input
-      const input = document.createElement('input');
-      input.className = 'tm-form-input';
-      input.id = 'api-key-input';
-      input.type = 'text';
-      input.placeholder = 'Nhập API Key của bạn tại đây';
-      input.value = getApiKey();
-
-      // Shortcut info
-      const shortcutInfo = document.createElement('span');
-      shortcutInfo.className = 'tm-shortcut-info';
-      shortcutInfo.textContent = 'Phím tắt: Alt+S để mở form này';
-
-      // Form footer
-      const footer = document.createElement('div');
-      footer.className = 'tm-settings-footer';
-
-      // Nút Save
-      const saveBtn = document.createElement('button');
-      saveBtn.className = 'tm-button tm-button-primary';
-      saveBtn.textContent = 'Lưu';
-      saveBtn.onclick = function() {
-          saveApiKey(input.value);
-          document.body.removeChild(overlay);
-          // Thông báo lưu thành công
-          //showNotification('API Key đã được lưu thành công!');
-      };
-
-      // Nút Cancel
-      const cancelBtn = document.createElement('button');
-      cancelBtn.className = 'tm-button tm-button-secondary';
-      cancelBtn.textContent = 'Hủy';
-      cancelBtn.onclick = function() {
-          document.body.removeChild(overlay);
-      };
-
-      // Lắp ráp form
-      formGroup.appendChild(label);
-      formGroup.appendChild(input);
-      formGroup.appendChild(shortcutInfo);
-
-      content.appendChild(formGroup);
-
-      header.appendChild(title);
-      header.appendChild(closeBtn);
-
-      footer.appendChild(cancelBtn);
-      footer.appendChild(saveBtn);
-
-      form.appendChild(header);
-      form.appendChild(content);
-      form.appendChild(footer);
-
-      overlay.appendChild(form);
-      document.body.appendChild(overlay);
+      //makeDraggable(form, header); // Kéo thả form */
 
       // Focus vào input
-      setTimeout(() => {
-          input.focus();
-      }, 100);
+      // setTimeout(() => {
+      //   formGroup.querySelector('api-key-input').focus();
+      //   //input.focus();
+      // }, 100); 
 
       // Xử lý phím Enter để lưu
-      input.addEventListener('keydown', function(e) {
-          if (e.key === 'Enter') {
-              saveApiKey(input.value);
-              document.body.removeChild(overlay);
-              //showNotification('API Key đã được lưu thành công!');
-          }
-      });
+      // const input = document.getElementById('api-key-input');
+      // input.addEventListener('keydown', function(e) {
+      //     if (e.key === 'Enter') {
+      //       saveApiKey(input.value);
+      //       //document.body.removeChild(overlay);
+      //       //showNotification('API Key đã được lưu thành công!');
+      //     }
+      // });
 
-      // Xử lý click bên ngoài để đóng form
-      overlay.addEventListener('click', function(e) {
-          if (e.target === overlay) {
-              document.body.removeChild(overlay);
-          }
-      });
-    }
+      // // Xử lý click bên ngoài để đóng form
+      // const overlay = document.querySelector('.tm-settings-overlay');
+      // overlay.addEventListener('click', function(e) {
+      //     if (e.target === overlay) {
+      //       document.body.removeChild(overlay);
+      //     }
+      // });
+    };
 
     // Lưu API Key vào localStorage
     function saveApiKey(inputApiKey) {
@@ -779,117 +773,7 @@
     // ==== Hiện form dich Viet Anh ====
     function showTranslateForm() {
     removePopup(".tm-translate-form");
-    // // Tạo overlay
-    // const overlay = document.createElement("div");
-    // overlay.className = "tm-translate-overlay";
 
-    // // tao form container
-    // const form = document.createElement("div");
-    // form.className = "tm-translate-form";
-
-    // // dat vi tri cho form
-    // form.style.position = "fixed";
-    // form.style.top = "50%";
-    // form.style.left = "50%";
-    // //form.style.transform = "none"; // Xóa transform mặc định (nếu có)
-    // //form.style.transform = "translate(-50%, -50%)";
-
-    // // tao header
-    // const header = document.createElement("div");
-    // header.className = "tm-settings-header";
-
-    // // Tieu de
-    // const title = document.createElement("div");
-    // title.className = "tm-settings-title";
-    // title.textContent = "Dịch văn bản";
-
-    // // nut dong
-    // const closeBtn = document.createElement("div");
-    // closeBtn.className = "tm-settings-close";
-    // closeBtn.onclick = function() {
-    //     document.body.removeChild(overlay);
-    // };
-
-    // // phan noi dung form
-    // const content = document.createElement("div");
-    // content.className = "tm-settings-content";
-
-    // // Form group
-    // const formGroup = document.createElement("div");
-    // formGroup.className = "tm-form-group";
-
-    // // Label
-    // const label = document.createElement("label");
-    // label.className = "tm-form-label";
-    // label.textContent = "Văn bản cần dịch";
-    // label.htmlFor = "translate-input";
-
-    // //Result Lable
-    // const resultLabel = document.createElement("label");
-    // resultLabel.className = "tm-form-label";
-    // resultLabel.textContent = "Result:";
-    // resultLabel.htmlFor = "translate-result";
-
-    // // Input
-    // const input = document.createElement("textarea");
-    // input.className = "tm-form-input";
-    // input.id = "translate-input";
-    // input.placeholder = "Nhập văn bản cần dịch tại đây";
-    // input.style.height = "150px"; // Chiều cao mặc định
-
-
-    // // Shortcut info
-    // const shortcutInfo = document.createElement("span");
-    // shortcutInfo.className = "tm-shortcut-info";
-    // shortcutInfo.textContent = "Phím tắt: Alt+Z để mở form này";
-
-    // // Form footer
-    // const footer = document.createElement("div");
-    // footer.className = "tm-settings-footer";
-
-    // // Nút Dịch
-    // const translateBtn = document.createElement("button");
-    // translateBtn.className = "tm-button tm-button-primary";
-    // translateBtn.textContent = "Dịch";
-    // translateBtn.onclick = function() {
-    //     const textToTranslate = input.value;
-    //     if (textToTranslate.trim() === "") {
-    //         alert("Vui lòng nhập văn bản cần dịch.");
-    //         return;
-    //     }
-    //     let promt = "Dịch đoạn văn bản sau sang tiếng Anh, chỉ hiển thị kết quả dịch:"
-    //     callGeminiAPI(textToTranslate, resultLabel, promt);
-    // }
-    // // Nút Hủy
-    // const cancelBtn = document.createElement("button");
-    // cancelBtn.className = "tm-button tm-button-secondary";
-    // cancelBtn.textContent = "Hủy";
-    // cancelBtn.onclick = function() {
-    //     document.body.removeChild(overlay);
-    // };
-
-    // // Lắp ráp form
-    // formGroup.appendChild(label);
-    // formGroup.appendChild(input);
-    // formGroup.appendChild(shortcutInfo);
-    // formGroup.appendChild(resultLabel);
-
-    // content.appendChild(formGroup);
-
-    // header.appendChild(title);
-    // header.appendChild(closeBtn);
-
-    // footer.appendChild(cancelBtn);
-    // footer.appendChild(translateBtn);
-
-    // form.appendChild(header);
-    // form.appendChild(content);
-    // form.appendChild(footer);
-
-    // overlay.appendChild(form);
-    // document.body.appendChild(overlay);
-
-    // Chức năng kéo thả
     createForm({
       overlayClass: 'tm-translate-overlay',
       formClass: 'tm-translate-form',
@@ -904,11 +788,11 @@
             text: 'Văn bản cần dịch',
             inputId: 'translate-input'
           },
-          input: {
+          textarea: {
             className: 'tm-form-input',
             inputId: 'translate-input',
-            type: 'text',
-            placeholder: 'Nhập văn bản cần dịch tại đây'
+            placeholder: 'Nhập văn bản cần dịch tại đây',
+            height: '100px'
           }
         },
         {
@@ -917,11 +801,10 @@
             text: 'Kết quả dịch',
             inputId: 'translate-result'
           },
-          textarea: {
-            className: 'tm-form-input',
-            inputId: 'translate-result',
-            placeholder: 'Kết quả sẽ hiển thị ở đây...',
-            height: '100px'
+          resultBox: {
+            className: 'tm-result-box',
+            id: 'translate-result',
+            
           }
         }
       ],
@@ -942,12 +825,24 @@
                 return;
               }
               const resultTarget = document.getElementById('translate-result');
+              //resultTarget.textContent = resultTarget
               let promt = "Dịch đoạn văn bản sau sang tiếng Anh, chỉ hiển thị kết quả dịch:"
               callGeminiAPI(textToTranslate, resultTarget, promt);
             }
           }
         ]
     }});
+
+    // khai báo form và header để có thể kéo thả
+    const form = document.querySelector('.tm-translate-form');
+    const header = form.querySelector('.tm-header');
+    // gỡ transform + tính toán vị trí thật của form
+    const rect = form.getBoundingClientRect();
+    form.style.transform = 'none'; // ❗ Bỏ transform đi để tránh nhảy
+    form.style.top = `${rect.top}px`;
+    form.style.left = `${rect.left}px`;
+
+    makeDraggable(form, header); // Kéo thả form
   }
 
     // Show settings popup setting khi nhấn Alt + key
@@ -964,4 +859,33 @@
         showTranslateForm();
       }
     });
+
+    // Thêm sự kiện click cho nút copy
+    document.addEventListener("click", function (e) {
+      const btn = e.target.closest(".tm-copy-button");
+      if (!btn) return; // Nếu không phải nút copy thì thoát
+
+      const targetId = btn.dataset.target;  // Lấy id của phần tử cần copy từ thuộc tính data-target
+      const targetEl = document.getElementById(targetId); //
+      if (!targetEl) return;
+    
+      const text = targetEl.textContent || targetEl.innerText;
+    
+      navigator.clipboard.writeText(text).then(() => {
+        btn.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" 
+                          xmlns="http://www.w3.org/2000/svg" class="icon-md-heavy">
+                          <path fill-rule="evenodd" clip-rule="evenodd" 
+                          d="M18.0633 5.67387C18.5196 5.98499 18.6374 6.60712 18.3262 7.06343L10.8262 18.0634C10.6585 18.3095 10.3898 18.4679 10.0934 18.4957C9.79688 18.5235 9.50345 18.4178 9.29289 18.2072L4.79289 13.7072C4.40237 13.3167 4.40237 12.6835 4.79289 12.293C5.18342 11.9025 5.81658 11.9025 6.20711 12.293L9.85368 15.9396L16.6738 5.93676C16.9849 5.48045 17.607 5.36275 18.0633 5.67387Z" 
+                          fill="currentColor"></path></svg>`
+        setTimeout(() => btn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                          xmlns="http://www.w3.org/2000/svg" class="icon-md-heavy">
+                                          <path fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M7 5C7 3.34315 8.34315 2 10 2H19C20.6569 2 22 3.34315 22 5V14C22 15.6569 20.6569 17 19 17H17V19C17 20.6569 15.6569 22 14 22H5C3.34315 22 2 20.6569 2 19V10C2 8.34315 3.34315 7 5 7H7V5ZM9 7H14C15.6569 7 17 8.34315 17 10V15H19C19.5523 15 20 14.5523 20 14V5C20 4.44772 19.5523 4 19 4H10C9.44772 4 9 4.44772 9 5V7ZM5 9C4.44772 9 4 9.44772 4 10V19C4 19.5523 4.44772 20 5 20H14C14.5523 20 15 19.5523 15 19V10C15 9.44772 14.5523 9 14 9H5Z"
+                                            fill="currentColor"></path></svg>`, 2000);
+      }).catch((err) => {
+        console.error("Copy lỗi:", err);
+        alert("Không thể copy nội dung.");
+      });
+    });
+    
   })();
